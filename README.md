@@ -1,6 +1,8 @@
 # Web-exposed Screen Profiler
 The Web-exposed Screen Profiler visualizes web-exposed screen information to show you what your screen and browser window looks like to a website.
 
+![](https://media.publit.io/file/snokagit/exposed-screen.gif)
+
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/snoka)
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7W1FDHVR)
 
