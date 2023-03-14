@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <script src="ua-parser.min.js"></script>
+  <script src="suscreen.min.js"></script>
+  <style>
+    .screen,
+    .avail-screen,
+    .outer-window,
+    .inner-window {
+      transition: 0.1s linear;
+    }
+
+    .inner-window {
+      background: #ffffff;
+    }
+
+    .outer-window {
+      background: #9fc2e4;
+    }
+
+    .avail-screen {
+      background: #c0dcb5;
+    }
+
+    .screen {
+      background: #f7ca9e;
+    }
+
+    .slidecontainer {
+      width: 100%;
+    }
+
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 25px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: 0.2s;
+      transition: opacity 0.2s;
+    }
+
+    .slider:hover {
+      opacity: 1;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      background: #04aa6d;
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      background: #04aa6d;
+      cursor: pointer;
+    }
+
+    #myRange {
+      direction: rtl;
+      max-width: 340px;
+    }
+
+    *,
+    *:after,
+    *:before {
+      box-sizing: border-box;
+    }
+
+    :root {
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      font-size: 1.25rem;
+    }
+
+    h1 {
+      margin: unset;
+      font-size:1.5em
+    }
+
+    *:focus {
+      outline: none;
+    }
+
+    details div {
+      border-left: 2px solid #000;
+      border-right: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 1.5em;
+    }
+
+    details div>*+* {
+      margin-top: 1.5em;
+    }
+
+    details+details {
+      margin-top: 0.5rem;
+    }
+
+    summary {
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary {
+      border: 2px solid #000;
+      padding: 0.75em 1em 0.75em calc(1.75rem + 0.75rem + 0.75rem);
+      cursor: pointer;
+      position: relative;
+    }
+
+    summary:before {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0.75rem;
+      content: "↓";
+      width: 1.75rem;
+      height: 1.75rem;
+      background-color: #000;
+      color: #fff;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    details[open] summary {
+      background-color: #eee;
+    }
+
+    details[open] summary:before {
+      content: "↑";
+    }
+
+    summary:hover {
+      background-color: #eee;
+    }
+
+    a {
+      color: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      color:#04aa6d
+
+    }
+
+    a:hover {
+      color:#222222
+    }
+
+    .more-details {
+      margin-top: 20px
+    }
+    .here {font-size:14px}
+  </style>
+  <title>Web-exposed Screen Profiler</title>
+  <meta name="description" content="The Web-exposed Screen Profiler visualizes web-exposed screen information to show you what your screen and browser window looks like to a website." />
+</head>
+
+<body>
+  <h1>Web-exposed Screen Profiler</h1>
+<a class="github-button" href="https://github.com/snokamedia/suscreen" data-icon="octicon-star" aria-label="Star snokamedia/suscreen on GitHub">Star</a>
+<a class="github-button" href="https://github.com/snokamedia" aria-label="Follow @snokamedia on GitHub">Follow @snokamedia</a>
+  <div class="screen-column">
+    <div class="screen" style="
+          width: 100px;
+          height: 100px;
+          outline: solid 1px #222222;
+          outline-offset: 0px;
+          display: flex;
+        ">
+
+      <div class="avail-screen" style="
+            width: 100px;
+            height: 100px;
+            outline: solid 1px #222222;
+            outline-offset: 0px;
+            display: flex;
+            align-self: auto;
+          ">
+        <div class="outer-window" style="
+              width: 100px;
+              height: 100px;
+              outline: solid 1px #222222;
+              outline-offset: 0px;
+              display: flex;
+              margin-left: 0px;
+              margin-top: 0px;
+            ">
+          <div class="inner-window" style="
+                width: 100px;
+                height: 100px;
+                outline: solid 1px #222222;
+                outline-offset: 0px;
+                align-self: flex-end;
+                text-align: center;
+              ">
+              <span class="here">you are here</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slidecontainer">
+    <label for="myRange">Scale: </label>
+    <input type="range" min="2" max="7" value="5" class="slider" step="0.01" id="myRange" />
+  </div>
+  <div id="os-properties" style="margin-top: 20px"></div>
+  <div id="window-properties"></div>
+
+  <div class="more-details">
+    <details>
+      <summary>Usage</summary>
+      <div>
+        <p> The Web-exposed Screen Profiler visualizes web-exposed screen information to show you what your screen and
+          browser window looks like to a website.
+        </p>
+        <p> This also demonstrates how the visitor’s OS can be deduced without using user-agent data and how extended
+          displays can be derived without using the Multi-Screen Window Placement API. It can be a useful tool to help
+          develop more comprehensive detection scripts that can infer more device details beyond user-agent data which
+          can be easily spoofed and mimicked.
+        </p>
+        <p> Try resizing your window, moving it to a different screen, zooming in or out, changing the size of your
+          taskbar/menu bar, and turning your bookmark bar on and off. Take a screenshot of it with a bot or online
+          screenshot tool and see if it gets detected as a VM.
+        </p>
+        <p> Then give me a star and buy me a coffee 😜
+          
+          <br><a class="github-button"  data-size="large"  href="https://github.com/snokamedia/suscreen" data-icon="octicon-star" aria-label="Star snokamedia/suscreen on GitHub">Star</a>
+          <a class="github-button" data-size="large" href="https://github.com/snokamedia" aria-label="Follow @snokamedia on GitHub">Follow @snokamedia</a>
+
+        <a href="https://www.buymeacoffee.com/snoka"><img
+          src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"></a>
+      <a href="https://ko-fi.com/W7W1FDHVR"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi"></a>
+    </p>
+      </div>
+    </details>
+    <details>
+      <summary>User-Agent and GPU</summary>
+      <div id="gpu-data"></div>
+      <div id="user-agent-data"></div>
+    </details>
+    <details>
+      <summary>Browser Features</summary>
+      <div id="user-feature-data"></div>
+    </details>
+    <details>
+      <summary>How is this possible?</summary>
+      <div>
+        <p>
+          In the mid-2000s, the Window object's capabilities expanded with the
+          introduction of the screen API. The screen API provides information
+          about the user's display, such as screen resolution, color depth,
+          and available screen space. This API allowed developers to create
+          web applications that could adapt to different screen sizes and
+          resolutions.
+        </p>
+        <p>
+          The screenLeft and screenTop properties were first introduced in
+          Internet Explorer 4, which was released in 1997. They were later
+          adopted by other major browsers, including Netscape Navigator and
+          Mozilla Firefox. The properties were included in the W3C's CSSOM
+          View Module, which was released as a recommendation in 2008.
+        </p>
+        <p>
+          In the early days of the web, the screenLeft and screenTop
+          properties were useful for creating pop-up windows that were
+          positioned relative to the screen, rather than the browser window.
+          They were often used for displaying ads, as well as for creating
+          custom login forms and other UI elements that needed to be
+          positioned outside of the browser window.
+        </p>
+        <p>
+          Additional Credits:<br><a href="https://github.com/faisalman/ua-parser-js" target="_blank">UAParser.js</a><br><a href="https://codepen.io/havardob/pen/abBJgQo" target="_blank">Accordion CSS</a>.</p>
+        </p>
+      </div>
+    </details>
+  </div>
+</body>
+
+</html>
