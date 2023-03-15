@@ -24,6 +24,11 @@ window.addEventListener('DOMContentLoaded', function () {
       screenWidthdiff: window.screen.availWidth - window.screen.width,
       initialLeft: window.screenLeft,
       initialTop: window.screenTop,
+      availLeft: window.screen.availLeft,
+      compLeft: window.screenLeft - window.screen.availLeft,
+      availTop: window.screen.availTop,
+      compTop: window.screenTop - window.screen.availTop,
+      colorDepth: window.screen.colorDepth
     }
   };
 
@@ -34,24 +39,24 @@ window.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.inner-window').style.width = actualInnerWidth / slider.value + "px";
     document.querySelector('.outer-window').style.height = globalProps.window_props.outerHeight / slider.value + "px";
     document.querySelector('.outer-window').style.width = globalProps.window_props.outerWidth / slider.value + "px";
-    document.querySelector('.outer-window').style.marginLeft = globalProps.screen_props.initialLeft / slider.value + "px";
-    document.querySelector('.outer-window').style.marginTop = globalProps.screen_props.initialTop / slider.value + "px";
+    document.querySelector('.outer-window').style.marginLeft = globalProps.screen_props.compLeft / slider.value + "px";
+    document.querySelector('.outer-window').style.marginTop = globalProps.screen_props.compTop / slider.value + "px";
     document.querySelector('.avail-screen').style.height = globalProps.screen_props.availHeight / slider.value + "px";
     document.querySelector('.avail-screen').style.width = globalProps.screen_props.availWidth / slider.value + "px";
     document.querySelector('.screen').style.height = globalProps.screen_props.height / slider.value + "px";
     document.querySelector('.screen').style.width = globalProps.screen_props.width / slider.value + "px";
     let props_html = '';
     if (globalProps.screen_props.initialLeft >= globalProps.screen_props.width) {
-      props_html += '<strong>isExtended: Its probably on the right extended display! </strong><br>';
+      props_html += '<strong>isExtended: Its probably on the right extended display! The primary display width is probably ' + globalProps.screen_props.availLeft + 'px </strong><br>';
     }
-    else if (globalProps.screen_props.initialLeft <= -72 && Math.abs(globalProps.screen_props.initialLeft) >= globalProps.window_props.outerWidth) {
+    else if (Math.abs(globalProps.screen_props.initialLeft) >= globalProps.window_props.outerWidth) {
       props_html += '<strong>isExtended: Its probably on the left extended display! </strong><br>';
     }
-    else if (globalProps.screen_props.initialTop <= -72 && Math.abs(globalProps.screen_props.initialTop) >= globalProps.window_props.outerHeight) {
+    else if (Math.sign(globalProps.screen_props.availTop) == -1 && Math.abs(globalProps.screen_props.initialTop) >= globalProps.window_props.outerHeight) {
       props_html += '<strong>isExtended: Its probably on the top extended display! </strong><br>';
     }
     else if (globalProps.screen_props.initialTop >= globalProps.screen_props.height) {
-      props_html += '<strong>isExtended: Its probably on the bottom extended display! </strong><br>';
+      props_html += '<strong>isExtended: Its probably on the bottom extended display! The primary display height is probably ' + globalProps.screen_props.availTop + 'px </strong><br>';
     }
     ;
     for (var prop in globalProps.window_props) {
@@ -154,6 +159,11 @@ window.addEventListener('DOMContentLoaded', function () {
       screenWidthdiff: window.screen.availWidth - window.screen.width,
       initialLeft: window.screenLeft,
       initialTop: window.screenTop,
+      availLeft: window.screen.availLeft,
+      compLeft: window.screenLeft - window.screen.availLeft,
+      availTop: window.screen.availTop,
+      compTop: window.screenTop - window.screen.availTop,
+      colorDepth: window.screen.colorDepth
     };
 
     display_properties();
