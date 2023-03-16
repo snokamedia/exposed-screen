@@ -2,7 +2,8 @@
 <html>
 
 <head>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
+  <meta charset="utf-8">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -93,7 +94,7 @@
 
     h1 {
       margin: unset;
-      font-size:1.5em
+      font-size: 1.5em
     }
 
     *:focus {
@@ -101,9 +102,9 @@
     }
 
     details div {
-      border-left: 2px solid #000;
-      border-right: 2px solid #000;
-      border-bottom: 2px solid #000;
+      border-left: 2px solid #222222;
+      border-right: 2px solid #222222;
+      border-bottom: 2px solid #222222;
       padding: 1.5em;
     }
 
@@ -124,7 +125,7 @@
     }
 
     summary {
-      border: 2px solid #000;
+      border: 2px solid #222222;
       padding: 0.75em 1em 0.75em calc(1.75rem + 0.75rem + 0.75rem);
       cursor: pointer;
       position: relative;
@@ -138,7 +139,7 @@
       content: "↓";
       width: 1.75rem;
       height: 1.75rem;
-      background-color: #000;
+      background-color: #222222;
       color: #fff;
       display: inline-flex;
       justify-content: center;
@@ -162,27 +163,79 @@
       color: inherit;
       font-weight: 600;
       text-decoration: none;
-      color:#04aa6d
-
+      color: #04aa6d
     }
 
     a:hover {
-      color:#222222
+      color: #222222
     }
 
     .more-details {
       margin-top: 20px
     }
-    .here {font-size:14px}
+
+    .here {
+      font-size: 14px
+    }
+
+
+    table {
+      border-collapse: collapse;
+      margin: 20px auto;
+    }
+
+    #mouse-properties {
+      margin: unset;
+    }
+
+    .mouse:after {
+      content: " ";
+      display: block;
+      height: 8px;
+      margin-top: -4px;
+      width: 1px;
+      background: #222222;
+      position: absolute;
+      right: 0;
+    }
+
+    .mouse:before {
+      content: " ";
+      display: block;
+      height: 1px;
+      width: 8px;
+      margin-right: -4px;
+      background: #222222;
+      position: absolute;
+      right: 0;
+    }
+
+    th,
+    td {
+      border: 1px solid #222222;
+      padding: 5px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #eee;
+    }
+
+    .mouse {
+      position: absolute;
+    }
   </style>
   <title>Web-exposed Screen Profiler</title>
-  <meta name="description" content="The Web-exposed Screen Profiler visualizes web-exposed screen information to show you what your screen and browser window looks like to a website." />
+  <meta name="description"
+    content="The Web-exposed Screen Profiler visualizes web-exposed screen information to show you what your screen and browser window looks like to a website." />
 </head>
 
 <body>
   <h1>Web-exposed Screen Profiler</h1>
-<a class="github-button" href="https://github.com/snokamedia/exposed-screen" data-icon="octicon-star" aria-label="Star snokamedia/exposed-screen on GitHub">Star</a>
-<a class="github-button" href="https://github.com/snokamedia" aria-label="Follow @snokamedia on GitHub">Follow @snokamedia</a>
+  <a class="github-button" href="https://github.com/snokamedia/exposed-screen" data-icon="octicon-star"
+    aria-label="Star snokamedia/exposed-screen on GitHub">Star</a>
+  <a class="github-button" href="https://github.com/snokamedia" aria-label="Follow @snokamedia on GitHub">Follow
+    @snokamedia</a>
   <div class="screen-column">
     <div class="screen" style="
           width: 100px;
@@ -217,7 +270,10 @@
                 align-self: flex-end;
                 text-align: center;
               ">
-              <span class="here">you are here</span>
+            <div class="mouse" style="
+            margin-top:0px;
+            margin-left:0px;
+          "></div>
           </div>
         </div>
       </div>
@@ -225,12 +281,15 @@
   </div>
   <div class="slidecontainer">
     <label for="myRange">Scale: </label>
-    <input type="range" min="2" max="7" value="5" class="slider" step="0.01" id="myRange" />
+    <input type="range" min="1.5" max="7" value="5" class="slider" step="0.01" id="myRange" />
   </div>
-  <div id="os-properties" style="margin-top: 20px"></div>
-  <div id="window-properties"></div>
-
+  <div id="window-sus" style="margin-top: 20px"></div>
+  <div id="os-properties"></div>
   <div class="more-details">
+    <details open>
+      <summary>Window and Screen Properties</summary>
+      <div id="window-properties"></div>
+    </details>
     <details>
       <summary>Usage</summary>
       <div>
@@ -247,14 +306,16 @@
           screenshot tool and see if it gets detected as a VM.
         </p>
         <p> Then give me a star and buy me a coffee 😜
-          
-          <br><a class="github-button"  data-size="large"  href="https://github.com/snokamedia/exposed-screen" data-icon="octicon-star" aria-label="Star snokamedia/exposed-screen on GitHub">Star</a>
-          <a class="github-button" data-size="large" href="https://github.com/snokamedia" aria-label="Follow @snokamedia on GitHub">Follow @snokamedia</a>
 
-        <a href="https://www.buymeacoffee.com/snoka"><img
-          src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"></a>
-      <a href="https://ko-fi.com/W7W1FDHVR"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi"></a>
-    </p>
+          <br><a class="github-button" data-size="large" href="https://github.com/snokamedia/exposed-screen"
+            data-icon="octicon-star" aria-label="Star snokamedia/exposed-screen on GitHub">Star</a>
+          <a class="github-button" data-size="large" href="https://github.com/snokamedia"
+            aria-label="Follow @snokamedia on GitHub">Follow @snokamedia</a>
+
+          <a href="https://www.buymeacoffee.com/snoka"><img
+              src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"></a>
+          <a href="https://ko-fi.com/W7W1FDHVR"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi"></a>
+        </p>
       </div>
     </details>
     <details>
@@ -265,6 +326,26 @@
     <details>
       <summary>Browser Features</summary>
       <div id="user-feature-data"></div>
+    </details>
+    <details>
+      <summary>Mouse Movement</summary>
+      <table id="mouse-properties">
+        <tr>
+          <th>Mouse</th>
+          <th>X</th>
+          <th>Y</th>
+        </tr>
+        <tr>
+          <td>client</td>
+          <td id="clientX"></td>
+          <td id="clientY"></td>
+        </tr>
+        <tr>
+          <td>screen</td>
+          <td id="screenX"></td>
+          <td id="screenY"></td>
+        </tr>
+      </table>
     </details>
     <details>
       <summary>How is this possible?</summary>
@@ -293,11 +374,14 @@
           positioned outside of the browser window.
         </p>
         <p>
-          Additional Credits:<br><a href="https://github.com/faisalman/ua-parser-js" target="_blank">UAParser.js</a><br><a href="https://codepen.io/havardob/pen/abBJgQo" target="_blank">Accordion CSS</a>.</p>
+          Additional Credits:<br><a href="https://github.com/faisalman/ua-parser-js"
+            target="_blank">UAParser.js</a><br><a href="https://codepen.io/havardob/pen/abBJgQo"
+            target="_blank">Accordion CSS</a>.</p>
         </p>
       </div>
     </details>
   </div>
+
 </body>
 
 </html>

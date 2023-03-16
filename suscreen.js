@@ -5,6 +5,12 @@ window.addEventListener('DOMContentLoaded', function () {
   let actualInnerHeight = Math.round(window.innerHeight / window.devicePixelRatio);
   const globalProps = {
     window_props: {
+      menubar: window.menubar.visible,
+      toolbar: window.toolbar.visible,
+      statusbar: window.statusbarv,
+      scrollbars: window.scrollbars.visible,
+      personalbar: window.personalbar.visible,
+      locationbar: window.locationbar.visible,
       innerWidth: window.innerWidth,
       innerHeight: window.innerHeight,
       actualInnerWidth: actualInnerWidth,
@@ -45,27 +51,35 @@ window.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.avail-screen').style.width = globalProps.screen_props.availWidth / slider.value + "px";
     document.querySelector('.screen').style.height = globalProps.screen_props.height / slider.value + "px";
     document.querySelector('.screen').style.width = globalProps.screen_props.width / slider.value + "px";
-    let props_html = '';
-    if (globalProps.screen_props.initialLeft >= globalProps.screen_props.width) {
-      props_html += '<strong>isExtended: Its probably on the right extended display! The primary display width is probably ' + globalProps.screen_props.availLeft + 'px </strong><br>';
+    let sus_html = '';
+    if (globalProps.screen_props.availTop == 0 && globalProps.screen_props.availLeft == 0) {
+      sus_html += '<strong>isPrimary: This is the primary display';
     }
-    else if (Math.abs(globalProps.screen_props.initialLeft) >= globalProps.window_props.outerWidth) {
-      props_html += '<strong>isExtended: Its probably on the left extended display! </strong><br>';
+    else if (globalProps.screen_props.initialLeft >= globalProps.screen_props.width) {
+      sus_html += '<strong>isExtended: Its probably on the right extended display! The primary display width is probably ' + globalProps.screen_props.availLeft + 'px </strong><br>';
+    }
+    else if (Math.abs(globalProps.screen_props.initialLeft) >= globalProps.window_props.actualInnerWidth) {
+      sus_html += '<strong>isExtended: Its probably on the left extended display! </strong><br>';
     }
     else if (Math.sign(globalProps.screen_props.availTop) == -1 && Math.abs(globalProps.screen_props.initialTop) >= globalProps.window_props.outerHeight) {
-      props_html += '<strong>isExtended: Its probably on the top extended display! </strong><br>';
+      sus_html += '<strong>isExtended: Its probably on the top extended display! </strong><br>';
     }
     else if (globalProps.screen_props.initialTop >= globalProps.screen_props.height) {
-      props_html += '<strong>isExtended: Its probably on the bottom extended display! The primary display height is probably ' + globalProps.screen_props.availTop + 'px </strong><br>';
-    }
-    ;
+      sus_html += '<strong>isExtended: Its probably on the bottom extended display! The primary display height is probably ' + globalProps.screen_props.availTop + 'px </strong><br>';
+    };
+
+    let props_html = '';
+    props_html += '<ul>';
     for (var prop in globalProps.window_props) {
-      props_html += prop + ': ' + globalProps.window_props[prop] + '<br>';
+      props_html += '<li>' + prop + ': ' + globalProps.window_props[prop] + '</li>';
     }
     for (var prop in globalProps.screen_props) {
-      props_html += prop + ': ' + globalProps.screen_props[prop] + '<br>';
+      props_html += '<li>' + prop + ': ' + globalProps.screen_props[prop] + '</li>';
     }
+    props_html += '</ul>';
     document.getElementById('window-properties').innerHTML = props_html;
+    document.getElementById('window-sus').innerHTML = sus_html;
+
   }
 
   display_properties();
@@ -73,6 +87,12 @@ window.addEventListener('DOMContentLoaded', function () {
   function init_properties() {
 
     var output_strings = [];
+    if (
+      globalProps.window_props.outerWidth === 0 &&
+      globalProps.window_props.outerHeight === 0
+    ) {
+      output_strings.push('Probably a VM');
+    }
     if (
       globalProps.window_props.windowWidthdiff <= -150 ||
       globalProps.window_props.windowHeightdiff <= -200 ||
@@ -104,25 +124,25 @@ window.addEventListener('DOMContentLoaded', function () {
       globalProps.screen_props.screenHeightdiff === -286 ||
       globalProps.screen_props.screenHeightdiff === -327
     ) {
-      output_strings.push('OS Prediction: Windows 10');
+      output_strings.push('OS Prediction (without user-agent): Windows 10');
     }
     if (
       globalProps.screen_props.screenHeightdiff === -32 ||
       globalProps.screen_props.screenHeightdiff === -48 ||
       globalProps.screen_props.screenHeightdiff === -72
     ) {
-      output_strings.push('OS Prediction: Windows 11');
+      output_strings.push('OS Prediction (without user-agent): Windows 11');
     }
     if (globalProps.screen_props.screenHeightdiff === -21) {
-      output_strings.push('OS Prediction: macOS 10.4 - 10.9');
+      output_strings.push('OS Prediction (without user-agent): macOS 10.4 - 10.9');
       document.querySelector('.avail-screen').style.alignSelf = 'flex-end';
     }
     if (globalProps.screen_props.screenHeightdiff === -22) {
-      output_strings.push('OS Prediction: macOS 10.10 - 10.15');
+      output_strings.push('OS Prediction (without user-agent): macOS 10.10 - 10.15');
       document.querySelector('.avail-screen').style.alignSelf = 'flex-end';
     }
     if (globalProps.screen_props.screenHeightdiff === -24) {
-      output_strings.push('OS Prediction: macOS 11 -');
+      output_strings.push('OS Prediction (without user-agent): macOS 11 -');
       document.querySelector('.avail-screen').style.alignSelf = 'flex-end';
     }
 
@@ -139,6 +159,12 @@ window.addEventListener('DOMContentLoaded', function () {
     actualInnerWidth = Math.round(window.innerWidth / window.devicePixelRatio);
     actualInnerHeight = Math.round(window.innerHeight / window.devicePixelRatio);
     globalProps.window_props = {
+      menubar: window.menubar.visible,
+      toolbar: window.toolbar.visible,
+      statusbar: window.statusbar.visible,
+      scrollbars: window.scrollbars.visible,
+      personalbar: window.personalbar.visible,
+      locationbar: window.locationbar.visible,
       innerWidth: window.innerWidth,
       innerHeight: window.innerHeight,
       actualInnerWidth: actualInnerWidth,
@@ -249,7 +275,6 @@ window.addEventListener('DOMContentLoaded', function () {
       { name: 'Credential Management API Support', value: 'credentials' in navigator },
       { name: 'Presentation API Support', value: 'presentation' in navigator },
       { name: 'Idle Detection API Support', value: 'IdleDetector' in window },
-      // { name: 'Bluetooth Device Presence API Support', value: 'onadvertisementreceived' in navigator.bluetooth },
       { name: 'Orientation Sensor API Support', value: 'AbsoluteOrientationSensor' in window },
       { name: 'Device Orientation API Support', value: 'DeviceOrientationEvent' in window },
       { name: 'Ambient Light Sensor API Support', value: 'AmbientLightSensor' in window },
@@ -270,5 +295,29 @@ window.addEventListener('DOMContentLoaded', function () {
 
   displayBrowserFeatures();
 
+  // Get a reference to the table cells
+  const screenXValue = document.getElementById('screenX');
+  const screenYValue = document.getElementById('screenY');
+  const clientXValue = document.getElementById('clientX');
+  const clientYValue = document.getElementById('clientY');
+  // Update the table with the current values of the MouseEvent properties
+  function updateTable(event) {
+    if (event.clientX && event.clientX !== null) {
+      clientXValue.innerHTML = event.clientX;
+    }
+    if (event.clientY !== null) {
+      clientYValue.innerHTML = event.clientY;
+    }
+    if (event.screenX !== null) {
+      screenXValue.innerHTML = event.screenX;
+    }
+    if (event.screenY !== null) {
+      screenYValue.innerHTML = event.screenY;
+    }
+    document.querySelector('.mouse').style.marginTop = event.clientY / slider.value + "px";
+    document.querySelector('.mouse').style.marginLeft = event.clientX / slider.value + "px";
+  }
 
+  // Add an event listener to the document to listen for mousemove events
+  document.addEventListener('mousemove', updateTable);
 });
