@@ -68,8 +68,13 @@ window.addEventListener('DOMContentLoaded', function () {
       sus_html += '<strong>isExtended: Its probably on the bottom extended display! The primary display height is probably ' + globalProps.screen_props.availTop + 'px </strong><br>';
     };
 
-    let props_html = '';
-    props_html += '<ul>';
+    let zoomLevel = Math.round(window.devicePixelRatio * 100);
+    let zoomLevelText = `Zoom Level: ${zoomLevel}%`;
+  
+    // Rest of your code to update HTML elements
+    let props_html = '<ul>';
+    props_html += `<li>${zoomLevelText}</li>`; // Display zoom level at the top
+  
     for (var prop in globalProps.window_props) {
       props_html += '<li>' + prop + ': ' + globalProps.window_props[prop] + '</li>';
     }
