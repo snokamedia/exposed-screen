@@ -1,4 +1,3 @@
-
 window.addEventListener('DOMContentLoaded', function () {
 
   let actualInnerWidth = Math.round(window.innerWidth / window.devicePixelRatio);
@@ -7,7 +6,7 @@ window.addEventListener('DOMContentLoaded', function () {
     window_props: {
       menubar: window.menubar.visible,
       toolbar: window.toolbar.visible,
-      statusbar: window.statusbarv,
+      statusbar: window.statusbar.visible,
       scrollbars: window.scrollbars.visible,
       personalbar: window.personalbar.visible,
       locationbar: window.locationbar.visible,
@@ -34,9 +33,265 @@ window.addEventListener('DOMContentLoaded', function () {
       compLeft: window.screenLeft - window.screen.availLeft,
       availTop: window.screen.availTop,
       compTop: window.screenTop - window.screen.availTop,
-      colorDepth: window.screen.colorDepth
-    }
+      colorDepth: window.screen.colorDepth,
+      pixelDepth: window.screen.pixelDepth,
+      orientation: screen.orientation ? screen.orientation.type : 'Not Available'
+    },
+    navigator_props: {
+      hardwareConcurrency: navigator.hardwareConcurrency || 'Not Available',
+      deviceMemory: navigator.deviceMemory || 'Not Available',
+      maxTouchPoints: navigator.maxTouchPoints || 0,
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      languages: navigator.languages,
+      connection: navigator.connection ? {
+        effectiveType: navigator.connection.effectiveType,
+        downlink: navigator.connection.downlink,
+        rtt: navigator.connection.rtt
+      } : 'Not Available',
+      platform: navigator.platform,
+      cookieEnabled: navigator.cookieEnabled,
+      doNotTrack: navigator.doNotTrack,
+      onLine: navigator.onLine,
+      appCodeName: navigator.appCodeName,
+      productSub: navigator.productSub,
+      vendorSub: navigator.vendorSub,
+      clipboardRead: 'Not Available',
+      timezoneOffset: new Date().getTimezoneOffset(),
+      prefersDarkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
+      prefersReducedMotion: window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      scrollbarWidth: getScrollbarWidth(),
+      historyLength: history.length,
+      geolocation: 'Not Available',
+      battery: 'Not Available',
+      fonts: ['Arial', 'Times New Roman', 'Courier New'].filter(font => detectFont(font)),
+      cssGridSupport: CSS.supports('display', 'grid'),
+      supportedCodecs: {
+        vp9: MediaRecorder.isTypeSupported('video/webm; codecs=vp9'),
+        h264: MediaRecorder.isTypeSupported('video/mp4; codecs="avc1.42E01E, mp4a.40.2"'),
+        opus: MediaRecorder.isTypeSupported('audio/webm; codecs=opus')
+      },
+      possibleVM: false,
+      adBlocker: false,
+      isPageVisible: !document.hidden,
+      storageEstimate: 'Not Available',
+      isPrivateBrowsing: 'Not Available',
+      motionSensors: {
+        accelerometer: 'Accelerometer' in window,
+        gyroscope: 'Gyroscope' in window
+      },
+      extensions: [],
+      gamepads: 'Not Available',
+      ambientLight: 'Not Available',
+      fontSmoothing: 'Not Available'
+    },
+    webglProps: {
+      vendor: 'Not Available',
+      renderer: 'Not Available',
+      shadingLanguageVersion: 'Not Available',
+      extensions: []
+    },
+    canvasFingerprint: '',
+    audioFingerprint: '',
+    errorFingerprint: '',
   };
+
+  // Helper functions
+  function getScrollbarWidth() {
+    let outer = document.createElement('div');
+    outer.style.visibility = 'hidden';
+    outer.style.overflow = 'scroll';
+    outer.style.width = '100px';
+    outer.style.position = 'absolute';
+    outer.style.top = '-9999px';
+    document.body.appendChild(outer);
+    let widthNoScroll = outer.offsetWidth;
+    let inner = document.createElement('div');
+    inner.style.width = '100%';
+    outer.appendChild(inner);
+    let widthWithScroll = inner.offsetWidth;
+    outer.parentNode.removeChild(outer);
+    return widthNoScroll - widthWithScroll;
+  }
+
+  function getCanvasFingerprint() {
+    let canvas = document.createElement('canvas');
+    let ctx = canvas.getContext('2d');
+    ctx.textBaseline = 'top';
+    ctx.font = '14px Arial';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#f60';
+    ctx.fillRect(125, 1, 62, 20);
+    ctx.fillStyle = '#069';
+    ctx.fillText('Hello, world!', 2, 15);
+    ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+    ctx.fillText('Hello, world!', 4, 17);
+    let dataUrl = canvas.toDataURL();
+    let hash = 0;
+    for (let i = 0; i < dataUrl.length; i++) {
+      hash = ((hash << 5) - hash) + dataUrl.charCodeAt(i);
+      hash = hash & hash;
+    }
+    return hash;
+  }
+  globalProps.canvasFingerprint = getCanvasFingerprint();
+
+  function getAudioFingerprint() {
+    let audioCtx = new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(1, 44100, 44100);
+    let oscillator = audioCtx.createOscillator();
+    oscillator.type = 'triangle';
+    oscillator.frequency.setValueAtTime(10000, audioCtx.currentTime);
+    let compressor = audioCtx.createDynamicsCompressor();
+    compressor.threshold.setValueAtTime(-50, audioCtx.currentTime);
+    compressor.knee.setValueAtTime(40, audioCtx.currentTime);
+    compressor.ratio.setValueAtTime(12, audioCtx.currentTime);
+    compressor.attack.setValueAtTime(0, audioCtx.currentTime);
+    compressor.release.setValueAtTime(0.25, audioCtx.currentTime);
+    oscillator.connect(compressor);
+    compressor.connect(audioCtx.destination);
+    oscillator.start(0);
+    audioCtx.startRendering();
+    return new Promise(resolve => {
+      audioCtx.oncomplete = function(event) {
+        let fingerprint = event.renderedBuffer.getChannelData(0)
+          .slice(4500, 5000)
+          .reduce((acc, val) => acc + Math.abs(val), 0)
+          .toString();
+        resolve(fingerprint);
+      };
+    });
+  }
+  getAudioFingerprint().then(fingerprint => {
+    globalProps.audioFingerprint = fingerprint;
+    // Continue with your code
+  });
+
+  function detectFont(font) {
+    let canvas = document.createElement('canvas');
+    let context = canvas.getContext('2d');
+    context.font = '72px monospace';
+    let baselineSize = context.measureText('A').width;
+    context.font = `72px '${font}', monospace`;
+    let newSize = context.measureText('A').width;
+    return newSize !== baselineSize;
+  }
+
+  function getErrorFingerprint() {
+    try {
+      null[0]();
+    } catch (e) {
+      globalProps.errorFingerprint = e.message;
+    }
+  }
+  getErrorFingerprint();
+
+  if ('AmbientLightSensor' in window) {
+    try {
+      let sensor = new AmbientLightSensor();
+      sensor.addEventListener('reading', () => {
+        globalProps.navigator_props.ambientLight = sensor.illuminance;
+      });
+      sensor.start();
+    } catch (err) {
+      console.error('Ambient Light Sensor error:', err);
+    }
+  }
+
+  function detectAdBlocker() {
+    let ad = document.createElement('div');
+    ad.innerHTML = '&nbsp;';
+    ad.className = 'adsbox';
+    ad.style.position = 'absolute';
+    ad.style.left = '-9999px';
+    document.body.appendChild(ad);
+    window.setTimeout(() => {
+      if (ad.offsetHeight === 0) {
+        globalProps.navigator_props.adBlocker = true;
+      }
+      ad.remove();
+    }, 100);
+  }
+  detectAdBlocker();
+
+  document.addEventListener('visibilitychange', () => {
+    globalProps.navigator_props.isPageVisible = !document.hidden;
+  });
+
+  if (navigator.storage && navigator.storage.estimate) {
+    navigator.storage.estimate().then(estimate => {
+      globalProps.navigator_props.storageEstimate = estimate;
+    });
+  }
+
+  function detectPrivateMode(callback) {
+    var db;
+    try {
+      db = indexedDB.open('test');
+      db.onerror = function() { callback(true); };
+      db.onsuccess = function() { callback(false); };
+    } catch(e) {
+      callback(true);
+    }
+  }
+  detectPrivateMode(isPrivate => {
+    globalProps.navigator_props.isPrivateBrowsing = isPrivate;
+  });
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(position => {
+      globalProps.navigator_props.geolocation = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      };
+    });
+  }
+
+  function getWebGLVendorAndRenderer() {
+    let gl = document.createElement('canvas').getContext('webgl');
+    if (!gl) return {};
+    let debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+    let vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+    let renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+    return { vendor, renderer };
+  }
+  let webglInfo = getWebGLVendorAndRenderer();
+  globalProps.webglProps.vendor = webglInfo.vendor;
+  globalProps.webglProps.renderer = webglInfo.renderer;
+
+  function detectExtensions() {
+    let knownExtensions = [
+      { name: 'uBlock Origin', test: () => !!window.uBlock },
+      { name: 'LastPass', test: () => !!window.lpTag },
+    ];
+    globalProps.navigator_props.extensions = knownExtensions.filter(ext => ext.test()).map(ext => ext.name);
+  }
+  detectExtensions();
+
+  window.addEventListener('gamepadconnected', event => {
+    globalProps.navigator_props.gamepads = navigator.getGamepads().length;
+  });
+
+  function detectFontSmoothing() {
+    let canvas = document.createElement('canvas');
+    let ctx = canvas.getContext('2d');
+    ctx.font = '72px Arial';
+    ctx.fillText('O', 0, 72);
+    let data = ctx.getImageData(35, 35, 1, 1).data;
+    globalProps.navigator_props.fontSmoothing = data[3] > 0; // Check alpha channel
+  }
+  detectFontSmoothing();
+
+  function isLikelyVM() {
+    const vmIndicators = [
+      /VirtualBox/i,
+      /VMware/i,
+      /Parallels/i,
+    ];
+    let isVM = vmIndicators.some(indicator => indicator.test(globalProps.webglProps.renderer));
+    if (isVM) {
+      globalProps.navigator_props.possibleVM = true;
+    }
+  }
+  isLikelyVM();
 
   function display_properties() {
     let slider = document.getElementById("myRange");

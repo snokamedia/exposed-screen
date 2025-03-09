@@ -178,7 +178,6 @@
       font-size: 14px
     }
 
-
     table {
       border-collapse: collapse;
       margin: 20px auto;
@@ -244,7 +243,6 @@
           outline-offset: 0px;
           display: flex;
         ">
-
       <div class="avail-screen" style="
             width: 100px;
             height: 100px;
@@ -291,34 +289,6 @@
       <div id="window-properties"></div>
     </details>
     <details>
-      <summary>Usage</summary>
-      <div>
-        <p> The Web-exposed Screen Profiler visualizes web-exposed screen information to show you what your screen and
-          browser window looks like to a website.
-        </p>
-        <p> This also demonstrates how the visitor’s OS can be deduced without using user-agent data and how extended
-          displays can be derived without using the Multi-Screen Window Placement API. It can be a useful tool to help
-          develop more comprehensive detection scripts that can infer more device details beyond user-agent data which
-          can be easily spoofed and mimicked.
-        </p>
-        <p> Try resizing your window, moving it to a different screen, zooming in or out, changing the size of your
-          taskbar/menu bar, and turning your bookmark bar on and off. Take a screenshot of it with a bot or online
-          screenshot tool and see if it gets detected as a VM.
-        </p>
-        <p> Then give me a star and buy me a coffee 😜
-
-          <br><a class="github-button" data-size="large" href="https://github.com/snokamedia/exposed-screen"
-            data-icon="octicon-star" aria-label="Star snokamedia/exposed-screen on GitHub">Star</a>
-          <a class="github-button" data-size="large" href="https://github.com/snokamedia"
-            aria-label="Follow @snokamedia on GitHub">Follow @snokamedia</a>
-
-          <a href="https://www.buymeacoffee.com/snoka"><img
-              src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"></a>
-          <a href="https://ko-fi.com/W7W1FDHVR"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi"></a>
-        </p>
-      </div>
-    </details>
-    <details>
       <summary>User-Agent and GPU</summary>
       <div id="gpu-data"></div>
       <div id="user-agent-data"></div>
@@ -346,6 +316,14 @@
           <td id="screenY"></td>
         </tr>
       </table>
+    </details>
+    <details>
+      <summary>Additional Information</summary>
+      <div>
+        <p><strong>Canvas Fingerprint:</strong> <span id="canvas-fingerprint"></span></p>
+        <p><strong>Audio Fingerprint:</strong> <span id="audio-fingerprint"></span></p>
+        <p><strong>Error Fingerprint:</strong> <span id="error-fingerprint"></span></p>
+      </div>
     </details>
     <details>
       <summary>How is this possible?</summary>
@@ -381,7 +359,6 @@
       </div>
     </details>
   </div>
-
 </body>
 
 </html>
