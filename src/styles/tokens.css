@@ -1,0 +1,276 @@
+:root {
+	color-scheme: light dark;
+	--surface: #ffffff;
+	--surface-2: #f3f4f6;
+	--text: #1a1a1a;
+	--muted: #5b6470;
+	--border: #222222;
+	--accent: #04aa6d;
+	--screen: #f7ca9e;
+	--avail: #c0dcb5;
+	--outer: #9fc2e4;
+	--inner: #ffffff;
+	--focus-ring: #2563eb;
+	--radius: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--surface: #14171c;
+		--surface-2: #1e232b;
+		--text: #e8eaed;
+		--muted: #a7b0bc;
+		--border: #3a424d;
+		--inner: #1e232b;
+	}
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	font-family:
+		"Source Sans Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+	line-height: 1.5;
+	margin: 0 auto;
+	max-width: 72rem;
+	padding: 1.5rem;
+	background: var(--surface);
+	color: var(--text);
+}
+
+.app-header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem 1rem;
+}
+
+.star-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	border: 2px solid var(--border);
+	border-radius: 999px;
+	padding: 0.4rem 1rem;
+	background: var(--surface-2);
+	color: var(--text);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.star-button svg {
+	font-size: 1.1em;
+	color: var(--accent);
+}
+
+.star-button:hover {
+	border-color: var(--accent);
+}
+
+.icon-heading {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.icon-heading svg {
+	font-size: 1.4em;
+	color: var(--accent);
+}
+
+.badge {
+	display: inline-block;
+	padding: 0.25rem 0.6rem;
+	border: 2px solid var(--border);
+	border-radius: 999px;
+	font-size: 0.85rem;
+	font-weight: 700;
+}
+
+.badge[hidden] {
+	display: none;
+}
+
+.method {
+	margin-top: 1.5rem;
+	max-width: 60rem;
+}
+
+.method h2 {
+	margin-bottom: 0.5rem;
+}
+
+.method ul {
+	padding-left: 1.25rem;
+}
+
+.method li {
+	margin-top: 0.5rem;
+}
+
+.method li:first-child {
+	margin-top: 0;
+}
+
+.result-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+	gap: 1rem;
+	margin-top: 1.25rem;
+}
+
+.result-card {
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+	border: 2px solid var(--border);
+	border-radius: var(--radius);
+	padding: 1.25rem;
+	background: var(--surface-2);
+}
+
+.result-icon {
+	flex: none;
+	font-size: 2rem;
+	line-height: 1;
+	color: var(--accent);
+}
+
+.result-body {
+	min-width: 0;
+}
+
+.result-kicker {
+	margin: 0;
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
+.result-note {
+	font-weight: 400;
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.result-title {
+	margin: 0.25rem 0;
+	font-size: 1.5rem;
+	line-height: 1.2;
+}
+
+.result-detail {
+	margin: 0;
+	color: var(--muted);
+}
+
+.result-body .badge {
+	margin-top: 0.5rem;
+}
+
+#screen-diagram {
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+	border: 2px solid var(--border);
+	border-radius: var(--radius);
+	background: var(--surface-2);
+}
+
+.d-screen {
+	fill: var(--screen);
+	stroke: var(--border);
+	stroke-width: 2;
+}
+.d-avail {
+	fill: var(--avail);
+	stroke: var(--border);
+	stroke-width: 2;
+}
+.d-outer {
+	fill: var(--outer);
+	stroke: var(--border);
+	stroke-width: 2;
+}
+.d-inner {
+	fill: var(--inner);
+	stroke: var(--border);
+	stroke-width: 2;
+}
+
+.diagram-legend {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.25rem;
+	margin: 0.75rem 0 0;
+	padding: 0;
+}
+.diagram-legend li {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+.swatch {
+	flex: none;
+	width: 1em;
+	height: 1em;
+	border: 1px solid var(--border);
+	border-radius: 2px;
+}
+.swatch-screen {
+	background: var(--screen);
+}
+.swatch-avail {
+	background: var(--avail);
+}
+.swatch-outer {
+	background: var(--outer);
+}
+.swatch-inner {
+	background: var(--inner);
+}
+
+#crosshair {
+	color: #111111;
+}
+#crosshair path {
+	fill: currentColor;
+}
+@media (prefers-color-scheme: dark) {
+	#crosshair {
+		color: #ffffff;
+	}
+}
+
+#pointer-readout {
+	font-variant-numeric: tabular-nums;
+	color: var(--muted);
+}
+
+.slidecontainer {
+	margin-top: 1rem;
+}
+
+.slider {
+	width: 100%;
+	max-width: 340px;
+	accent-color: var(--accent);
+}
+
+:focus-visible {
+	outline: 3px solid var(--focus-ring);
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	#screen-diagram {
+		transition: width 0.1s linear;
+	}
+}

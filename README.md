@@ -11,6 +11,20 @@ One of the features of this tool is its ability to deduce extended displays, est
 
 Try resizing your window, moving it to a different screen, zooming in or out, open dev tools, change the size of your taskbar/menu bar, and turn the bookmark bar on and off. Take a screenshot of it with a bot or online screenshot tool and see if it gets detected as a VM.
 
+## Development
+
+Vanilla TypeScript + Vite, Biome, Vitest, Playwright. See `ARCHITECTURE.md`.
+
+```sh
+npm ci
+npm run dev        # dev server
+npm run check      # Biome lint + format
+npm run typecheck  # tsc --noEmit
+npm run test       # unit tests
+npm run build      # typecheck + production build to dist/
+npm run size       # gzip bundle budget (40 KB)
+npm run test:e2e   # Playwright smoke on the built page
+```
+
 ## Additional Credits:
-[UAParser.js](https://github.com/faisalman/ua-parser-js)
-[Accordion CSS](https://codepen.io/havardob/pen/abBJgQo)
+[Phosphor Icons](https://phosphoricons.com/) (MIT, inlined SVG — no webfont)

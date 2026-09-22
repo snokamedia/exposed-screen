@@ -1,364 +1,110 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap"
-    rel="stylesheet">
-  <script src="ua-parser.min.js"></script>
-  <script src="suscreen.js"></script>
-  <style>
-    .screen,
-    .avail-screen,
-    .outer-window,
-    .inner-window {
-      transition: 0.1s linear;
-    }
-
-    .inner-window {
-      background: #ffffff;
-    }
-
-    .outer-window {
-      background: #9fc2e4;
-    }
-
-    .avail-screen {
-      background: #c0dcb5;
-    }
-
-    .screen {
-      background: #f7ca9e;
-    }
-
-    .slidecontainer {
-      width: 100%;
-    }
-
-    .slider {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 25px;
-      background: #d3d3d3;
-      outline: none;
-      opacity: 0.7;
-      -webkit-transition: 0.2s;
-      transition: opacity 0.2s;
-    }
-
-    .slider:hover {
-      opacity: 1;
-    }
-
-    .slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 25px;
-      height: 25px;
-      background: #04aa6d;
-      cursor: pointer;
-    }
-
-    .slider::-moz-range-thumb {
-      width: 25px;
-      height: 25px;
-      background: #04aa6d;
-      cursor: pointer;
-    }
-
-    #myRange {
-      direction: rtl;
-      max-width: 340px;
-    }
-
-    *,
-    *:after,
-    *:before {
-      box-sizing: border-box;
-    }
-
-    :root {
-      font-size: 16px;
-    }
-
-    body {
-      font-family: 'Source Sans Pro', sans-serif;
-      line-height: 1.5;
-      min-height: 100vh;
-      font-size: 1.25rem;
-    }
-
-    h1 {
-      margin: unset;
-      font-size: 1.5em
-    }
-
-    *:focus {
-      outline: none;
-    }
-
-    details div {
-      border-left: 2px solid #222222;
-      border-right: 2px solid #222222;
-      border-bottom: 2px solid #222222;
-      padding: 1.5em;
-    }
-
-    details div>*+* {
-      margin-top: 1.5em;
-    }
-
-    details+details {
-      margin-top: 0.5rem;
-    }
-
-    summary {
-      list-style: none;
-    }
-
-    summary::-webkit-details-marker {
-      display: none;
-    }
-
-    summary {
-      border: 2px solid #222222;
-      padding: 0.75em 1em 0.75em calc(1.75rem + 0.75rem + 0.75rem);
-      cursor: pointer;
-      position: relative;
-    }
-
-    summary:before {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 0.75rem;
-      content: "↓";
-      width: 1.75rem;
-      height: 1.75rem;
-      background-color: #222222;
-      color: #fff;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      flex-shrink: 0;
-    }
-
-    details[open] summary {
-      background-color: #eee;
-    }
-
-    details[open] summary:before {
-      content: "↑";
-    }
-
-    summary:hover {
-      background-color: #eee;
-    }
-
-    a {
-      color: inherit;
-      font-weight: 600;
-      text-decoration: none;
-      color: #04aa6d
-    }
-
-    a:hover {
-      color: #222222
-    }
-
-    .more-details {
-      margin-top: 20px
-    }
-
-    .here {
-      font-size: 14px
-    }
-
-    table {
-      border-collapse: collapse;
-      margin: 20px auto;
-    }
-
-    #mouse-properties {
-      margin: unset;
-    }
-
-    .mouse:after {
-      content: " ";
-      display: block;
-      height: 8px;
-      margin-top: -4px;
-      width: 1px;
-      background: #222222;
-      position: absolute;
-      right: 0;
-    }
-
-    .mouse:before {
-      content: " ";
-      display: block;
-      height: 1px;
-      width: 8px;
-      margin-right: -4px;
-      background: #222222;
-      position: absolute;
-      right: 0;
-    }
-
-    th,
-    td {
-      border: 1px solid #222222;
-      padding: 5px;
-      text-align: left;
-    }
-
-    th {
-      background-color: #eee;
-    }
-
-    .mouse {
-      position: absolute;
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Web-exposed Screen Profiler</title>
-  <meta name="description"
-    content="The Web-exposed Screen Profiler visualizes web-exposed screen information to show you what your screen and browser window looks like to a website." />
+  <meta name="description" content="The Web-exposed Screen Profiler visualizes web-exposed screen information to show you what your screen and browser window looks like to a website." />
 </head>
-
 <body>
-  <h1>Web-exposed Screen Profiler</h1>
-  <a class="github-button" href="https://github.com/snokamedia/exposed-screen" data-icon="octicon-star"
-    aria-label="Star snokamedia/exposed-screen on GitHub">Star</a>
-  <a class="github-button" href="https://github.com/snokamedia" aria-label="Follow @snokamedia on GitHub">Follow
-    @snokamedia</a>
-  <div class="screen-column">
-    <div class="screen" style="
-          width: 100px;
-          height: 100px;
-          outline: solid 1px #222222;
-          outline-offset: 0px;
-          display: flex;
-        ">
-      <div class="avail-screen" style="
-            width: 100px;
-            height: 100px;
-            outline: solid 1px #222222;
-            outline-offset: 0px;
-            display: flex;
-            align-self: auto;
-          ">
-        <div class="outer-window" style="
-              width: 100px;
-              height: 100px;
-              outline: solid 1px #222222;
-              outline-offset: 0px;
-              display: flex;
-              margin-left: 0px;
-              margin-top: 0px;
-            ">
-          <div class="inner-window" style="
-                width: 100px;
-                height: 100px;
-                outline: solid 1px #222222;
-                outline-offset: 0px;
-                align-self: flex-end;
-                text-align: center;
-              ">
-            <div class="mouse" style="
-            margin-top:0px;
-            margin-left:0px;
-          "></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slidecontainer">
-    <label for="myRange">Scale: </label>
-    <input type="range" min="1.5" max="7" value="5" class="slider" step="0.01" id="myRange" />
-  </div>
-  <div id="window-sus" style="margin-top: 20px"></div>
-  <div id="os-properties"></div>
-  <div class="more-details">
-    <details open>
-      <summary>Window and Screen Properties</summary>
-      <div id="window-properties"></div>
-    </details>
-    <details>
-      <summary>User-Agent and GPU</summary>
-      <div id="gpu-data"></div>
-      <div id="user-agent-data"></div>
-    </details>
-    <details>
-      <summary>Browser Features</summary>
-      <div id="user-feature-data"></div>
-    </details>
-    <details>
-      <summary>Mouse Movement</summary>
-      <table id="mouse-properties">
-        <tr>
-          <th>Mouse</th>
-          <th>X</th>
-          <th>Y</th>
-        </tr>
-        <tr>
-          <td>client</td>
-          <td id="clientX"></td>
-          <td id="clientY"></td>
-        </tr>
-        <tr>
-          <td>screen</td>
-          <td id="screenX"></td>
-          <td id="screenY"></td>
-        </tr>
-      </table>
-    </details>
-    <details>
-      <summary>Additional Information</summary>
-      <div>
-        <p><strong>Canvas Fingerprint:</strong> <span id="canvas-fingerprint"></span></p>
-        <p><strong>Audio Fingerprint:</strong> <span id="audio-fingerprint"></span></p>
-        <p><strong>Error Fingerprint:</strong> <span id="error-fingerprint"></span></p>
-      </div>
-    </details>
-    <details>
-      <summary>How is this possible?</summary>
-      <div>
-        <p>
-          In the mid-2000s, the Window object's capabilities expanded with the
-          introduction of the screen API. The screen API provides information
-          about the user's display, such as screen resolution, color depth,
-          and available screen space. This API allowed developers to create
-          web applications that could adapt to different screen sizes and
-          resolutions.
-        </p>
-        <p>
-          The screenLeft and screenTop properties were first introduced in
-          Internet Explorer 4, which was released in 1997. They were later
-          adopted by other major browsers, including Netscape Navigator and
-          Mozilla Firefox. The properties were included in the W3C's CSSOM
-          View Module, which was released as a recommendation in 2008.
-        </p>
-        <p>
-          In the early days of the web, the screenLeft and screenTop
-          properties were useful for creating pop-up windows that were
-          positioned relative to the screen, rather than the browser window.
-          They were often used for displaying ads, as well as for creating
-          custom login forms and other UI elements that needed to be
-          positioned outside of the browser window.
-        </p>
-        <p>
-          Additional Credits:<br><a href="https://github.com/faisalman/ua-parser-js"
-            target="_blank">UAParser.js</a><br><a href="https://codepen.io/havardob/pen/abBJgQo"
-            target="_blank">Accordion CSS</a>.</p>
-        </p>
-      </div>
-    </details>
-  </div>
-</body>
+  <header class="app-header">
+    <h1><span class="icon-heading" data-icon="monitor">Web-exposed Screen Profiler</span></h1>
+    <a class="star-button" href="https://github.com/snokamedia/exposed-screen"><span data-icon="star" aria-hidden="true"></span>Star on GitHub</a>
+  </header>
 
+  <main>
+    <section aria-label="Screen diagram">
+      <svg id="screen-diagram" viewBox="0 0 1920 1080" role="img" aria-labelledby="diagram-title diagram-desc">
+        <title id="diagram-title">Screen and browser window size diagram</title>
+        <desc id="diagram-desc">Nested rectangles comparing physical screen, available screen area, outer browser window, and viewport, with the current pointer position.</desc>
+        <rect id="rect-screen" class="d-screen" x="0" y="0" width="100" height="100" vector-effect="non-scaling-stroke" />
+        <rect id="rect-avail" class="d-avail" x="0" y="0" width="100" height="100" vector-effect="non-scaling-stroke" />
+        <rect id="rect-outer" class="d-outer" x="0" y="0" width="100" height="100" vector-effect="non-scaling-stroke" />
+        <rect id="rect-inner" class="d-inner" x="0" y="0" width="100" height="100" vector-effect="non-scaling-stroke" />
+        <g id="crosshair" style="visibility:hidden" aria-hidden="true">
+          <g transform="translate(-15.88 -9.84) scale(0.3)">
+            <path d="M168,132.69,214.08,115l.33-.13A16,16,0,0,0,213,85.07L52.92,32.8A15.95,15.95,0,0,0,32.8,52.92L85.07,213a15.82,15.82,0,0,0,14.41,11l.78,0a15.84,15.84,0,0,0,14.61-9.59l.13-.33L132.69,168,184,219.31a16,16,0,0,0,22.63,0l12.68-12.68a16,16,0,0,0,0-22.63ZM195.31,208,144,156.69a16,16,0,0,0-26,4.93c0,.11-.09.22-.13.32l-17.65,46L48,48l159.85,52.2-45.95,17.64-.32.13a16,16,0,0,0-4.93,26h0L208,195.31Z" />
+          </g>
+        </g>
+      </svg>
+      <ul class="diagram-legend" aria-label="Diagram color legend">
+        <li><span class="swatch swatch-screen" aria-hidden="true"></span>Taskbar / dock (OS-reserved)</li>
+        <li><span class="swatch swatch-avail" aria-hidden="true"></span>Available area</li>
+        <li><span class="swatch swatch-outer" aria-hidden="true"></span>Browser chrome (nav bar / scrollbars)</li>
+        <li><span class="swatch swatch-inner" aria-hidden="true"></span>Viewport</li>
+      </ul>
+      <p id="pointer-readout" aria-live="polite">Pointer: not yet moved</p>
+      <div class="slidecontainer">
+        <label for="myRange">Scale: </label>
+        <input type="range" min="1.5" max="7" value="5" class="slider" step="0.01" id="myRange" />
+      </div>
+      <div class="result-grid" aria-live="polite">
+        <section class="result-card" aria-label="Display detection result">
+          <span class="result-icon" id="display-result-icon" aria-hidden="true"></span>
+          <div class="result-body">
+            <p class="result-kicker">Display</p>
+            <h2 class="result-title" id="display-result-title">Analyzing…</h2>
+            <p class="result-detail" id="display-result-detail"></p>
+          </div>
+        </section>
+        <section class="result-card" aria-label="Operating system prediction">
+          <span class="result-icon" id="os-result-icon" aria-hidden="true"></span>
+          <div class="result-body">
+            <p class="result-kicker">OS Prediction <span class="result-note">without user-agent</span></p>
+            <h2 class="result-title" id="os-result-title">Analyzing…</h2>
+            <p class="result-detail" id="os-result-detail"></p>
+            <span class="badge" id="vm-badge" hidden></span>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="method" aria-label="How detection works">
+      <h2>How detection works</h2>
+      <p>
+        Everything on this page is measured live in your browser. No user-agent
+        string is read, stored, or sent anywhere. The guesses below come purely
+        from screen and window geometry that any website can see.
+      </p>
+      <ul>
+        <li>
+          <strong>The diagram.</strong> The white box is your page viewport, the
+          blue band around it is the browser's own interface (address bar,
+          toolbars, scrollbars), the green area is the space your operating
+          system makes available to windows, and the orange edge is the strip
+          the OS keeps for itself: the taskbar or dock.
+        </li>
+        <li>
+          <strong>Which display.</strong> When this window sits on a secondary
+          monitor, the browser reports the available area shifted away from the
+          origin. The size and direction of that shift tells us whether you are
+          on the primary display or an extended one to the left, right, above,
+          or below it.
+        </li>
+        <li>
+          <strong>Which OS.</strong> The gap between the full screen height and
+          the available height equals the pixels reserved for the taskbar, dock,
+          or menu bar. Each operating system reserves a characteristic amount.
+          A default Windows taskbar takes about 40 pixels, for example, so we
+          match the measured gap against signatures recorded from real systems.
+          If nothing matches, we say so instead of guessing.
+        </li>
+        <li>
+          <strong>Virtual machines.</strong> A window with zero size, a window
+          far larger than its screen, or the classic 800×600 virtual display
+          (along with a VM graphics driver) suggests the browser is running
+          inside a virtual machine.
+        </li>
+      </ul>
+      <p>
+        These are heuristics, not proof: resized taskbars, auto-hidden docks,
+        display scaling, and unusual setups can all change the numbers. That is
+        exactly the point. This is what your setup looks like to every site
+        you visit.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
 </html>

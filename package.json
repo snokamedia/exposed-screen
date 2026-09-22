@@ -1,0 +1,28 @@
+{
+	"name": "exposed-screen",
+	"version": "2.0.0",
+	"description": "Web-exposed Screen Profiler — visualizes what your screen and browser window look like to a website.",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc --noEmit && vite build",
+		"preview": "vite preview --port 8901",
+		"check": "biome check .",
+		"check:fix": "biome check --write .",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run",
+		"test:e2e": "playwright test",
+		"size": "node scripts/check-size.mjs",
+		"audit": "npm audit --audit-level=high"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.14",
+		"@playwright/test": "^1.49.1",
+		"typescript": "^5.7.3",
+		"vite": "^8.3.0",
+		"vitest": "^5.0.1"
+	},
+	"engines": {
+		"node": ">=20.19"
+	}
+}
