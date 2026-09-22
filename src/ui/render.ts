@@ -123,8 +123,7 @@ export function initApp(): void {
 	let lastPosition = positionKey(win, scr);
 	window.setInterval(() => {
 		const moved =
-			positionKey(collectWindowProps(), collectScreenProps()) !==
-			lastPosition;
+			positionKey(collectWindowProps(), collectScreenProps()) !== lastPosition;
 		if (moved) {
 			displayProperties();
 			lastPosition = positionKey(win, scr);
